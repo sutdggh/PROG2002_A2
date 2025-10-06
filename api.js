@@ -1,4 +1,5 @@
 const express = require('express');
+const path = require('path');
 const { getConnection } = require('./event_db');
 
 const app = express();
@@ -11,6 +12,9 @@ const categoriesRouter = require('./routes/categories');
 // Use routes
 app.use('/api/events', eventsRouter);
 app.use('/api/categories', categoriesRouter);
+
+// Use client
+app.use(express.static(path.join(__dirname, 'client')));
 
 
 const PORT = 3000;
