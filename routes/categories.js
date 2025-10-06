@@ -1,21 +1,16 @@
-const mysql = require('mysql2');
+const express = require('express');
+const router = express.Router();
+const { getConnection } = require('../event_db');
 
+router.get('/', (req, res) => {
+  const sql = `SELECT id, name, slug FROM event_categories ORDER BY name ASC`;
 
-const dbConfig = {
-  host: 'localhost',
-  user: 'root',
-  password: '123456',
-  database: 'charityevents_db'
-};
+  getConnection().query(sql, (err, results) => {
+    if (err) {
+      return res.status(500).json({ error: err.message });
+    }
+    res.json(results);
+  });
+});
 
-let conn;
-
-const getConnection = () => {
-  if (!conn) {
-    conn = mysql.createConnection(dbConfig);
-    console.log("MySQL connected");
-  }
-  return conn;
-};
-
-module.exports = { getConnection };
+module.exports = router;
