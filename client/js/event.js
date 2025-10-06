@@ -4,6 +4,7 @@ const eventId = params.get('id');
 
 if(eventId){
   fetchEventDetail(eventId, ev => {
+    // insert event detail
     eventContainer.innerHTML = `
             ${ev.image_url ? `<img src="${ev.image_url}" alt="${ev.name}">` : ''}
             <h2>${ev.name}</h2>

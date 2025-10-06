@@ -2,6 +2,7 @@ const form = document.getElementById('search-form');
 const resultsContainer = document.getElementById('results');
 const categorySelect = document.getElementById('category');
 
+// fill category for select option
 fetchCategories(data => {
   categorySelect.innerHTML = '<option value="">All Categories</option>';
   data.forEach(cat => {
@@ -12,6 +13,7 @@ fetchCategories(data => {
   });
 });
 
+// add submit listener
 form.addEventListener('submit', e => {
   e.preventDefault();
   const params = {
@@ -22,6 +24,7 @@ form.addEventListener('submit', e => {
   fetchSearchEvents(params, renderResults);
 });
 
+// resnder results
 function renderResults(events) {
   resultsContainer.innerHTML = '';
   if(events.length === 0){

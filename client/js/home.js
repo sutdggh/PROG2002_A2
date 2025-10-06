@@ -2,6 +2,7 @@ const eventsContainer = document.getElementById('events');
 
 function renderEvents(events) {
   eventsContainer.innerHTML = '';
+  // for each event and create card
   events.forEach(ev => {
     const isPast = ev.end_datetime && new Date(ev.end_datetime) < new Date;
     const card = document.createElement('div');

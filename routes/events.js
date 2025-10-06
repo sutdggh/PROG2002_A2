@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const { getConnection } = require('../event_db');
 
+// get gome events
 router.get('/home', (req, res) => {
   const sql = `
     SELECT e.id, e.name, e.purpose, e.start_datetime, e.end_datetime, e.city, e.state, e.image_url, c.name AS category, o.name AS organization
@@ -19,7 +20,9 @@ router.get('/home', (req, res) => {
   });
 });
 
+// search events
 router.get('/search', (req, res) => {
+  // get query parameters
   const { date, location, category_id } = req.query;
 
   // default need status is active
@@ -28,7 +31,7 @@ router.get('/search', (req, res) => {
 
   // other conditions
   if (date) {
-    conditions.push("e.start_datetime <= ? AND (e.end_datetime IS NULL OR e.end_datetime >= ?)");
+    conditions.push("(DATE(e.start_datetime) <= ? AND (e.end_datetime IS NULL OR DATE(e.end_datetime) >= ?))");
     params.push(date, date);
   }
   if (location) {
